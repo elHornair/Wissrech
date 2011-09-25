@@ -5,9 +5,38 @@ def encode(data):
     code = []
 
     for bit in data:
-	code.append(bit)
+	code.append(int(bit))
 
-    return code
+    # prefill parity-bits with dummy data
+    parity_exp = 0
+    while 2**parity_exp < len(code):
+        code.insert(2**parity_exp-1, 'p')
+        parity_exp += 1
+
+    # loop through parity bits and define them
+    parity_exp = 0
+    while 2**parity_exp < len(code):
+
+        parity_index = 2**parity_exp - 1
+
+        if parity_exp == 0:
+            start_index = 2
+            code[parity_index] = code[start_index] ^ code[start_index]
+        elif parity_exp == 1:
+            start_index = 5
+            code[parity_index] = code[2]
+        else:
+            start_index = parity_index + 1
+            code[parity_index] = code[start_index] ^ code[start_index]
+
+        for interval_index in range(start_index, len(code), 2**(parity_exp + 1)):
+            for data_index in range(interval_index, interval_index + parity_exp + 1):
+                if len(code) > data_index:
+                    code[parity_index] = code[parity_index] ^ code[data_index]
+
+        parity_exp += 1
+
+    return "".join(map(str, code))
 
 if __name__ == "__main__":
 
@@ -15,8 +44,6 @@ if __name__ == "__main__":
     parser = OptionParser()
     parser.add_option("-i", "--input", dest="input", help="string consisting of 0 and 1")
     (options, args) = parser.parse_args()
-
-    print args
 
     if not options.input:
         parser.print_help()
