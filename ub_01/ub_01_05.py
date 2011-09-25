@@ -117,9 +117,10 @@ def build_dictionary(text, max_leaves):
             
     dictionary = []
     for char, appearances in frequency_dict.items():
+        print appearances
         percentage = int(math.floor(100.0 / len(text) * appearances * 100))
         dictionary.append((percentage, char))
-    
+
     dictionary.sort(key=lambda tup: tup[0])
 
     while len(dictionary) > 1:
@@ -158,7 +159,7 @@ def build_dictionary(text, max_leaves):
 
 
 if __name__ == "__main__":
-    '''Compress a file with the huffman compressoin'''
+    '''Compress a file with the huffman compression'''
     
     #init command line parser
     usage = "usage: %prog compress/decompress input output"
