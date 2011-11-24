@@ -4,8 +4,8 @@ import mpl_toolkits.mplot3d.axes3d as p3
 
 # base values
 delta = 0.1
-x = numpy.arange(-3.0, 3.0, delta)
-y = numpy.arange(-3.0, 3.0, delta)
+x = numpy.arange(-5.0, 5.0, delta)
+y = numpy.arange(-5.0, 5.0, delta)
 X, Y = pylab.meshgrid(x, y)
 
 # functions
@@ -20,7 +20,7 @@ ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 
 # plot
-ax.plot_surface(X, Y, Z1)
-ax.plot_surface(X, Y, Z2)
+ax.plot_surface(X, Y, Z1, alpha=0.5)
+ax.plot_surface(X, Y, Z2, alpha=0.5)
 
 pylab.show()
